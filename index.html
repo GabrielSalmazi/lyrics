@@ -137,29 +137,30 @@
 
         }
 
-        #picArtista{
+        #picArtista {
             width: 50px;
             border-radius: 5px;
         }
 
-        #infoArtista{
+        #infoArtista {
             background-color: #4399c4;
             margin-top: 5px;
             border-radius: 5px;
             padding: 10px;
         }
 
-        .infoArtistaMusica{
+        .infoArtistaMusica {
             font-weight: bold;
         }
-        #spanArtista{
+
+        #spanArtista {
             font-size: 20px;
             color: white;
         }
-        #spanMusica{
+
+        #spanMusica {
             color: rgb(46, 46, 46)
         }
-        
     </style>
 
     <script>
@@ -258,7 +259,7 @@
                             $(".tituloLetra").fadeIn("fast");
                             $(".letras").fadeIn("fast");
 
-                            
+
 
                         } catch (error) {
                             //erro de musica não localizada
@@ -274,20 +275,20 @@
                 );
 
                 jQuery.getJSON(
-                    "https://api.vagalume.com.br/search.php?art="+artist+"&mus="+song+"&extra=artpic",
+                    "https://api.vagalume.com.br/search.php?art=" + artist + "&mus=" + song + "&extra=artpic",
                     function (data) {
 
                         //validação de erro
                         try {
                             var formato = data;//retorno da letra
                             console.log(data);
-                            $("#picArtista").attr("src",data.art["pic_medium"]);
+                            $("#picArtista").attr("src", data.art["pic_medium"]);
                             $("#spanArtista").text(data.art["name"]);
                             $("#spanMusica").text(data.mus[0].name);
-                            $("#infoArtista").css("display","block");
-                     
+                            $("#infoArtista").css("display", "block");
 
-                            
+
+
 
                         } catch (error) {
                             console.log("erro");
@@ -297,7 +298,29 @@
                 );
 
 
-                
+
+
+
+                const settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": "https://deezerdevs-deezer.p.rapidapi.com/search?q="+artist+" "+song+"",
+                    "method": "GET",
+                    "headers": {
+                        "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+                        "x-rapidapi-key": "5063f4b804msh0e755333c564c63p17d285jsn4bf4461be903"
+                    }
+                };
+
+                $.ajax(settings).done(function (response) {
+                    console.log(response.data[0]["preview"]);
+
+                    var conteudo = '<audio controls class="mt-3"><source id="audio" src="'+response.data[0]["preview"]+'" type="audio/mp3"><p>Your browser doesnt support HTML5 audio. Here is a <a href="viper.mp3">link to the audio</a> instead.</p></audio>';
+                    $("#infoArtista").append(conteudo);
+                });
+
+
+
             }
         }
 
@@ -311,8 +334,8 @@
             <div class="col-md-6" align="center">
                 <h3 class="text-left">Lyrics</h3>
                 <hr>
-                <i class="fa fa-microphone icone"></i><input type="text" placeholder="Artista" id="artista" ><br>
-                <i class="fa fa-music icone"></i><input type="text" placeholder="Musica" id="musica" ><br>
+                <i class="fa fa-microphone icone"></i><input type="text" placeholder="Artista" id="artista"><br>
+                <i class="fa fa-music icone"></i><input type="text" placeholder="Musica" id="musica"><br>
                 <button value="Procurar" id="searchSong" onclick="doSubmit()">Pesquisar</button>
 
                 <div class="alert alert-success" role="alert">
@@ -327,7 +350,7 @@
 
 
                 </div>
-                
+
                 <div id="infoArtista" align="left" style="display: none;">
                     <div class="row">
                         <div class="col-2">
@@ -338,7 +361,10 @@
                             <span id="spanMusica" class="infoArtistaMusica"></span>
                         </div>
                     </div>
-                    
+                    <div class="row">
+                        
+                    </div>
+
                 </div>
             </div>
         </div>
