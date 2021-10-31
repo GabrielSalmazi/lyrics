@@ -315,7 +315,8 @@
                 $.ajax(settings).done(function (response) {
                     console.log(response.data[0]["preview"]);
 
-                    var conteudo = '<audio controls class="mt-3"><source id="audio" src="'+response.data[0]["preview"]+'" type="audio/mp3"><p>Your browser doesnt support HTML5 audio. Here is a <a href="viper.mp3">link to the audio</a> instead.</p></audio>';
+                    $("#previa").remove()
+                    var conteudo = '<audio controls class="mt-3" id="previa"><source id="audio" src="'+response.data[0]["preview"]+'" type="audio/mp3"><p>Your browser doesnt support HTML5 audio. Here is a <a href="viper.mp3">link to the audio</a> instead.</p></audio>';
                     $("#infoArtista").append(conteudo);
                 });
 
